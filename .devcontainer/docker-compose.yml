@@ -7,19 +7,32 @@ services:
       - "3000:3000"
     volumes:
       - .:/workspace
-    working_dir: /workspace
-    command: npm run dev
     depends_on:
       - mongo
     environment:
-      - MONGO_URI=mongodb://mongo:27017/funny_recipes
+      MONGO_URI: mongodb://mongo:27017/funny_recipes
 
   mongo:
-    image: mongo:6
+    image: mongo
+    restart: always
     ports:
       - "27017:27017"
     volumes:
-      - mongo-data:/data/db
+      - mongo_data:/data/db
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongo
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: secret
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: true
+      ME_CONFIG_BASICAUTH: "true"
 
 volumes:
-  mongo-data:
+  mongo_data:
