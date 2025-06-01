@@ -3,12 +3,12 @@
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/workspace",
-  "forwardPorts": [3000, 27017],
+  "forwardPorts": [3000, 27017, 8081],
   "postCreateCommand": "npm install",
+  "postStartCommand": "docker-compose down && docker-compose up -d",
   "customizations": {
     "vscode": {
       "extensions": ["dbaeumer.vscode-eslint"]
     }
   }
 }
-
