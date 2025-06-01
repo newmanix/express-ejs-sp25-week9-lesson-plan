@@ -2,7 +2,7 @@
   "name": "Node.js Dev with Mongo",
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
-  "workspaceFolder": "/workspace",
+  "workspaceFolder": ".",
   "forwardPorts": [3000, 27017, 8081],
   "postCreateCommand": "npm install",
   "postStartCommand": "docker-compose down && docker-compose up -d",
