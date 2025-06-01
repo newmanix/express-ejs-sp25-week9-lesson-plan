@@ -2,37 +2,42 @@ version: '3.8'
 
 services:
   app:
-    build: .
-    ports:
-      - "3000:3000"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: node-app
     volumes:
       - .:/workspace
+    working_dir: /workspace
+    ports:
+      - "3000:3000"
     depends_on:
       - mongo
     environment:
-      MONGO_URI: mongodb://mongo:27017/funny_recipes
+      - MONGO_URI=mongodb://mongo:27017/funnyrecipes
+    command: npm start
 
   mongo:
-    image: mongo
-    restart: always
+    image: mongo:6
+    container_name: mongo-db
+    restart: unless-stopped
     ports:
       - "27017:27017"
     volumes:
-      - mongo_data:/data/db
+      - mongo-data:/data/db
 
   mongo-express:
     image: mongo-express
-    restart: always
+    container_name: mongo-express
+    restart: unless-stopped
     ports:
       - "8081:8081"
-    depends_on:
-      - mongo
     environment:
-      ME_CONFIG_MONGODB_SERVER: mongo
-      ME_CONFIG_BASICAUTH_USERNAME: admin
-      ME_CONFIG_BASICAUTH_PASSWORD: secret
-      ME_CONFIG_MONGODB_ENABLE_ADMIN: true
-      ME_CONFIG_BASICAUTH: "true"
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=admin
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
 
 volumes:
-  mongo_data:
+  mongo-data:
