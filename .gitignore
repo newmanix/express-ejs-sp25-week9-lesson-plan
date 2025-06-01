@@ -38,3 +38,6 @@ Thumbs.db
 # OS-specific
 ehthumbs.db
 Icon?
+
+# Mongo data
+/data/db
