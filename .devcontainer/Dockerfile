@@ -1,10 +1,10 @@
 FROM node:18
 
-# Install Git
+# Install Git explicitly
 RUN apt-get update && apt-get install -y git
 
-# Set working directory inside the container
-WORKDIR /workspace
+# Set working directory
+WORKDIR /app
 
-# Expose server port
+# Expose ports for the app
 EXPOSE 3000
