@@ -1,10 +1,11 @@
 version: '3.8'
+
 services:
   app:
     build: .
     container_name: funny-recipes-app
     volumes:
-      - .:/app
+      - .:/workspaces/express-ejs-sp25-week9-lesson-plan
     ports:
       - "3000:3000"
     depends_on:
